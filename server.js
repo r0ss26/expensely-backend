@@ -24,7 +24,7 @@ mongoose.connect(db, {
 
 //use routes
 app.use("/users", userRoutes)
-app.use("/users", authRoutes)
+app.use("/auth", authRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
