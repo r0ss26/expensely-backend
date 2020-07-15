@@ -4,6 +4,7 @@ const ObjectId = Schema.Types.ObjectId;
 
 const expenseTransactionSchema = new Schema({
     user: { type: ObjectId, ref: "User" },
+    date: { type: Date, default: Date.now },
     category: { name: String, color: String },
     amount: Number,
     comment: String,
