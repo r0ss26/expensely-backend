@@ -31,6 +31,7 @@ router.post("/", async (req, res) => {
         })
 
         await user.save()
+        res.status(400).send({ msg: "User saved" })
 
     } catch (error) {
 
