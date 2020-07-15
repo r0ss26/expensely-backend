@@ -10,7 +10,6 @@ const secret = process.env.SECRET
 
 const router = express.Router()
 
-
 // @route POST /users/register
 // @desc Create a new user
 // @access Public
@@ -89,7 +88,6 @@ router.post("/register", [
             console.log(error.message)
             res.status(500).send({ msg: "Internal server error" })
         }
-
 
     })
 

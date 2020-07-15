@@ -25,6 +25,36 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    profileImage: {
+        type: String
+    },
+    expense_categories: [
+        {
+            name: { type: String, trim: true },
+            color: {
+                type: String,
+                default: getRandomColor
+            }
+        }
+    ],
+    budget_categories: [
+        {
+            name: { type: String, trim: true },
+            color: {
+                type: String,
+                default: getRandomColor
+            }
+        }
+    ],
+    income_categories: [
+        {
+            name: { type: String, trim: true },
+            color: {
+                type: String,
+                default: getRandomColor
+            }
+        }
+    ],
 
 }, {
     timestamps: true,
