@@ -7,7 +7,7 @@ const secret = process.env.SECRET
 module.exports = function (req, res, next) {
 
     //get token from header
-    const token = req.header("x-auth-token")
+    const token = req.headers.authorization.split(" ")[1];
 
     //check if there is token
     if (!token) {
