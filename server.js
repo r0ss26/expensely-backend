@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import userRoutes from './routes/userRoutes'
+import authRoutes from './routes/authRoutes'
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ mongoose.connect(db, {
 
 //use routes
 app.use("/users", userRoutes)
+app.use("/users", authRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)

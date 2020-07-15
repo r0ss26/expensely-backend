@@ -1,28 +1,36 @@
 import express from 'express'
 import User from '../models/userModel'
 import { check, validationResult } from 'express-validator'
+import bcrypt from 'bcryptjs'
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
 
+dotenv.config()
+const secret = process.env.SECRET
 
 const router = express.Router()
 
 
-// @route POST /users
+// @route POST /users/register
 // @desc Create a new user
 // @access Public
 
-router.post("/", [
+router.post("/register", [
 
-    // username must be an email
+    // firstname required
     check("firstName", "firstName is required")
         .not()
         .isEmpty(),
 
+    //last name required
     check("lastName", "lastName is required")
         .not()
         .isEmpty(),
 
+    //email required
     check('email', "Please include a valid email.").isEmail(),
-    // password must be at least 5 chars long
+
+    // password must be at least 6 chars long
     check('password').isLength({ min: 6 })
 ],
     async (req, res) => {
@@ -33,13 +41,7 @@ router.post("/", [
             return res.status(400).json({ errors: errors.array() })
         }
 
-
         const { firstName, lastName, email, password } = req.body
-
-        // Simple validation
-        if (!firstName || !lastName || !email || !password) {
-            return res.status(400).json({ msg: "Please enter all fields" });
-        }
 
         try {
 
@@ -58,8 +60,30 @@ router.post("/", [
                 password
             })
 
+            //geneate salt of length 10 and save to salt
+            const salt = await bcrypt.genSalt(10)
+
+            //hash password with salt
+            user.password = await bcrypt.hash(password, salt)
+
             await user.save()
-            res.status(400).send({ msg: "User saved" })
+            //res.send(user)
+            // res.status(400).send({ msg: "User saved" })
+
+            //create payload with user id
+            const payload = {
+                user: {
+                    id: user.id
+                }
+            }
+
+            //create jwt with payload
+            jwt.sign(payload, secret, {
+                expiresIn: "10h"
+            }, (err, token) => {
+                if (err) throw err;
+                res.json({ token })
+            })
 
         } catch (error) {
             console.log(error.message)
