@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import userRoutes from './routes/userRoutes'
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,6 +21,8 @@ mongoose.connect(db, {
   .then(() => console.log('mongoDB connected'))
   .catch(err => console.log(err))
 
+//use routes
+app.use("/users", userRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
