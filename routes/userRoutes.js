@@ -13,6 +13,11 @@ router.post("/", async (req, res) => {
 
     const { firstName, lastName, email, password } = req.body
 
+    // Simple validation
+    if (!firstName || !lastName || !email || !password) {
+        return res.status(400).json({ msg: "Please enter all fields" });
+    }
+
     try {
 
         //check if email exists
@@ -34,9 +39,8 @@ router.post("/", async (req, res) => {
         res.status(400).send({ msg: "User saved" })
 
     } catch (error) {
-
         console.log(error.message)
-
+        res.status(500).send({ msg: "Internal server error"})
     }
 
 
