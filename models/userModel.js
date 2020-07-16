@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+import getRandomColor from '../utils/getRandomColor'
+
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
