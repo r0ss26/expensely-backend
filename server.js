@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import userRoutes from './routes/userRoutes'
 import authRoutes from './routes/authRoutes'
+import expenseRoutes from './routes/expenseRoutes'
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -18,6 +19,7 @@ mongoose.connect(db, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false
 })
   .then(() => console.log('mongoDB connected'))
   .catch(err => console.log(err))
@@ -25,6 +27,7 @@ mongoose.connect(db, {
 //use routes
 app.use("/users", userRoutes)
 app.use("/auth", authRoutes)
+app.use("/expense", expenseRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)

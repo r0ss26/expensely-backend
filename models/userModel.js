@@ -31,10 +31,10 @@ const UserSchema = new Schema({
     expense_categories: [
         {
             name: { type: String, trim: true },
-            color: {
-                type: String,
-                default: getRandomColor
-            }
+            // color: {
+            //     type: String,
+            //    // default: getRandomColor
+            // }
         }
     ],
     budget_categories: [
@@ -42,7 +42,7 @@ const UserSchema = new Schema({
             name: { type: String, trim: true },
             color: {
                 type: String,
-                default: getRandomColor
+               // default: getRandomColor
             }
         }
     ],
@@ -51,7 +51,7 @@ const UserSchema = new Schema({
             name: { type: String, trim: true },
             color: {
                 type: String,
-                default: getRandomColor
+                // default: getRandomColor
             }
         }
     ],
