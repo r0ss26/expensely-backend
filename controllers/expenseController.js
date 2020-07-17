@@ -1,6 +1,5 @@
 import User from '../models/userModel'
-import ExpenseTransaction, { findById } from "../models/expenseTransactions";
-import mongoose from 'mongoose'
+import ExpenseTransaction from "../models/expenseModal";
 
 export const addExpense = async (req, res) => {
 
@@ -139,7 +138,7 @@ export const getAllExpenses = async (req, res) => {
             user: await User.findById(req.user.id)
         });
 
-        console.log(expenses)
+     //   console.log(expenses)
         res.json(expenses)
 
         // try {

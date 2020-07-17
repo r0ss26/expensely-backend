@@ -5,12 +5,14 @@ import dotenv from 'dotenv'
 import userRoutes from './routes/userRoutes'
 import authRoutes from './routes/authRoutes'
 import expenseRoutes from './routes/expenseRoutes'
+// import expressValidator from 'express-validator'
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+// app.use(expressValidator())
 
 dotenv.config()
 
