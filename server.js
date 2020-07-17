@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import userRoutes from './routes/userRoutes'
+import categoriesRoutes from './routes/categoriesRoutes'
 import authRoutes from './routes/authRoutes'
 
 const app = express();
@@ -25,6 +26,7 @@ mongoose.connect(db, {
 //use routes
 app.use("/users", userRoutes)
 app.use("/auth", authRoutes)
+app.use('/categories', categoriesRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
