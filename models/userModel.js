@@ -1,63 +1,99 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema
+import getRandomColor from "../utils/getRandomColor";
 
-const UserSchema = new Schema({
+const Schema = mongoose.Schema;
 
+const CategoriesSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  color: {
+    type: String,
+    default: getRandomColor,
+  },
+  type: {
+      type: String,
+      required: true,
+      match: /^income$|^expense$/,
+  }
+});
+
+export const BudgetSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  timePeriod: {
+    type: String,
+    required: true,
+    match: /^monthly$|^weekly$/,
+  },
+  categories: [CategoriesSchema],
+});
+
+export const TransactionSchema = new Schema(
+  {
+    transactionType: {
+      type: String,
+      required: true,
+      lowercase: true,
+      match: /^income$|^expense$/,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    comment: {
+      type: String,
+    },
+    category: CategoriesSchema,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const UserSchema = new Schema(
+  {
     firstName: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
     },
 
     lastName: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
     },
     email: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: true
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     profileImage: {
-        type: String
+      type: String,
     },
-    expense_categories: [
-        {
-            name: { type: String, trim: true },
-            // color: {
-            //     type: String,
-            //    // default: getRandomColor
-            // }
-        }
-    ],
-    budget_categories: [
-        {
-            name: { type: String, trim: true },
-            color: {
-                type: String,
-               // default: getRandomColor
-            }
-        }
-    ],
-    income_categories: [
-        {
-            name: { type: String, trim: true },
-            color: {
-                type: String,
-                // default: getRandomColor
-            }
-        }
-    ],
-
-}, {
+    transactions: [TransactionSchema],
+    budgets: [BudgetSchema],
+  },
+  {
     timestamps: true,
-})
+  }
+);
 
-module.exports = mongoose.model("User", UserSchema)
+mongoose.model('User', UserSchema)
