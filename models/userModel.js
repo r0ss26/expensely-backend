@@ -42,7 +42,7 @@ export const BudgetSchema = new Schema({
     match: /^monthly$|^weekly$/,
     lowercase: true,
   },
-  categories: [CategoriesSchema],
+  category: String,
 });
 
 export const TransactionSchema = new Schema(

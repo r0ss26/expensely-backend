@@ -6,14 +6,14 @@ export const createCategory = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: error.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { name, color, type } = req.body;
 
     const user = await User.findById(req.user.id);
 
-    if (user.categories.find((category) => category.name === name)) {
+    if (user.categories.find((category) => category.name.toLowerCase() === name.toLowerCase())) {
       return res.status(409).json({ msg: "Category already exists" });
     }
 
@@ -48,6 +48,12 @@ export const getCategories = async (req, res) => {
 
 export const updateCategory = async (req, res) => {
   try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: error.array() });
+    }
+
     const { name, color, type } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -70,6 +76,12 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
   try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: error.array() });
+    }
+    
     const user = await User.findById(req.user.id);
     const category = user.categories.id(req.params.categoryId);
 
