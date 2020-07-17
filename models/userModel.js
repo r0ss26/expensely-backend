@@ -9,6 +9,7 @@ const CategoriesSchema = new Schema({
     type: String,
     required: true,
     lowercase: true,
+    unique: true,
   },
   color: {
     type: String,
@@ -16,11 +17,11 @@ const CategoriesSchema = new Schema({
     lowercase: true,
   },
   type: {
-      type: String,
-      required: true,
-      match: /^income$|^expense$/,
-      lowercase: true
-  }
+    type: String,
+    required: true,
+    match: /^income$|^expense$/,
+    lowercase: true,
+  },
 });
 
 export const BudgetSchema = new Schema({
@@ -29,6 +30,7 @@ export const BudgetSchema = new Schema({
     required: true,
     trim: true,
     lowercase: true,
+    unique: true,
   },
   amount: {
     type: Number,
@@ -38,7 +40,7 @@ export const BudgetSchema = new Schema({
     type: String,
     required: true,
     match: /^monthly$|^weekly$/,
-    lowercase: true
+    lowercase: true,
   },
   categories: [CategoriesSchema],
 });
@@ -102,4 +104,4 @@ export const UserSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model("User", UserSchema);
