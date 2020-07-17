@@ -7,7 +7,7 @@ import {
   updateBudget,
   deleteBudget,
   validate
-} from '../controllers/categoriesController'
+} from '../controllers/budgetsController'
 
 dotenv.config();
 
@@ -26,8 +26,8 @@ router.get('/', auth, getBudgets)
 // @route PUT/PATCH /categories
 // @desc Edit an existing category
 // @access private
-router.put('/:budgetId', auth, updateBudget)
-router.patch('/:budgetId', auth, updateBudget)
+router.put('/:budgetId', auth, validate('updateBudget'), updateBudget)
+router.patch('/:budgetId', auth, validate('updateBudget'), updateBudget)
 
 // @route DELETE /categories
 // @desc Delete an existing category
