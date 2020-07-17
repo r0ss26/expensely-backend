@@ -27,7 +27,7 @@ router.get('/view/all', auth, getAllExpenses)
 // @desc Create a new expense
 // @access Private
 
-router.post('/add', auth, addExpense)
+router.post('/add/new', auth, addExpense)
 
 // @route  PUT /:expenseId
 // @desc Get all expenses

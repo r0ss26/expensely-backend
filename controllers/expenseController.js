@@ -1,18 +1,56 @@
 import User from '../models/userModel'
-import ExpenseTransaction from "../models/expenseModal";
 
 export const addExpense = async (req, res) => {
+    console.log(req.body)
+
+
 
     try {
 
-        //create a new expense and add req body to new expense
-        let newExpense = new ExpenseTransaction(req.body)
+        const { amount, transactionType, category } = req.body
 
+        const { name, color, type } = category
+        //console.log(req.user.id)
         //find user by userId from token
-        let user = await User.findById(req.user.id).select("-password")
+        //let user = await User.findById(req.user.id).select("-password")
+        //   const { amount, category,  transactionType } = req.body
+        //   const newExpense = new User()
+        let user = await User.findById(req.user.id)
+        // res.json(user)
+        //user.transactions = newExpense
+        //create a new expense and add req body to new expense
+        // let newExpense = new User(req.body)
+        // console.log(user.transactions)
+        await user.transactions.push({
+            amount,
+            category,
+            transactionType
+        })
+
+        // await user.transactions.category = {
+        //     name, color, type
+        // }
+
+        await user.save()
+        return res.json(user)
+        // let newExpense = new User(req.body)
+
+        // newExpense.user = user
+        //find user by userId from token
+        //let user = await User.findById(req.user.id).select("-password")
+        // user.transactions = new 
+        // res.json(user)
+        // const user = await User.findById(req.body.id)
         //console.log(user)
         //save user to newExpense user field
-        newExpense.user = user
+        // let newExpense = user.transactions(req.body)
+
+        // user.transactions = newExpense
+        // newExpense.user = user
+
+        //await user.save()
+
+
 
         // //find category name saved in user
         // let category = user.expense_categories.find(
@@ -33,11 +71,11 @@ export const addExpense = async (req, res) => {
         // // ref category to new Transaction.category
         // newExpense.category = category
         //save to new transaction
-        await newExpense.save()
+        // await newExpense.save()
 
         //return saved new transaction
         // console.log(newExpense.user._id)
-        return res.status(200).json(newExpense)
+        // return res.status(200).json(user)
 
 
     } catch (error) {
@@ -138,7 +176,7 @@ export const getAllExpenses = async (req, res) => {
             user: await User.findById(req.user.id)
         });
 
-     //   console.log(expenses)
+        //   console.log(expenses)
         res.json(expenses)
 
         // try {
