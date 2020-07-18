@@ -43,7 +43,10 @@ export const getBudgets = async (req, res) => {
 export const getBudget = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    return res.status(200).json(user.budgets.id(req.params.budgetId));
+    const budget = user.budgets.id(req.params.budgetId);
+
+    if (!budget) return res.status(404).json({ msg: "Budget not found" });
+    return res.status(200).json(budget);
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "Internal server error" });
@@ -59,7 +62,7 @@ export const updateBudget = async (req, res) => {
       return res.status(404).json({ msg: "budget not found" });
     }
 
-    budget.set(req.body)
+    budget.set(req.body);
 
     user.save();
     return res.status(200).json(budget);
@@ -81,7 +84,6 @@ export const deleteBudget = async (req, res) => {
     budget.remove();
     user.save();
     return res.status(200).json(budget);
-
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "Internal server error" });
