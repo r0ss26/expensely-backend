@@ -26,7 +26,7 @@ router.get('/', auth, getTransactions)
 // @access Private
 router.post("/", auth, validate("addTransaction"), addTransaction);
 
-// @route  PUT /:expenseId
+// @route  PUT PATCH /:expenseId
 // @desc Get all expenses
 // @access Private
 router.put("/:transactionId", auth, editTransaction)

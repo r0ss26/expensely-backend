@@ -101,7 +101,7 @@ export const validationRules = (method) => {
     case "updateCategory":
       return [
         param("categoryId").exists(),
-        body("type").not().isEmpty().isIn(["income", "expense"]),
+        body("type").optional().isIn(["income", "expense"]),
       ];
     case "deleteCategory":
       return [param("categoryId").exists()];

@@ -144,5 +144,9 @@ export const validate = (method) => {
         body("amount").exists().not().isEmpty(),
         body("category").exists().not().isEmpty(),
       ];
+    case "editTransaction":
+      return [
+        body("transactionType").optional().isIn(["income", "expense"])
+      ]
   }
 };
