@@ -21,8 +21,8 @@ export const createBudget = async (req, res) => {
       category,
     };
 
-    user.budgets.push(newbudget);
-    user.save();
+    await user.budgets.push(newbudget);
+    await user.save();
     return res.status(201).json(user.budgets[user.budgets.length - 1]);
   } catch (error) {
     console.log(error);
@@ -43,7 +43,7 @@ export const getBudgets = async (req, res) => {
 export const getBudget = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const budget = user.budgets.id(req.params.budgetId);
+    const budget = await user.budgets.id(req.params.budgetId);
 
     if (!budget) return res.status(404).json({ msg: "Budget not found" });
     return res.status(200).json(budget);
@@ -62,9 +62,9 @@ export const updateBudget = async (req, res) => {
       return res.status(404).json({ msg: "budget not found" });
     }
 
-    budget.set(req.body);
+    await budget.set(req.body);
+    await user.save();
 
-    user.save();
     return res.status(200).json(budget);
   } catch (error) {
     console.log(error);
@@ -81,8 +81,8 @@ export const deleteBudget = async (req, res) => {
       return res.status(404).json({ msg: "budget not found" });
     }
 
-    budget.remove();
-    user.save();
+    await budget.remove();
+    await user.save();
     return res.status(200).json(budget);
   } catch (error) {
     console.log(error);

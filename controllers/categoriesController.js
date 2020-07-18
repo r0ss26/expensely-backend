@@ -21,8 +21,9 @@ export const createCategory = async (req, res) => {
       type,
     };
 
-    user.categories.push(newCategory);
-    user.save();
+    await user.categories.push(newCategory);
+    await user.save();
+
     return res.status(201).json(user.categories[user.categories.length - 1]);
   } catch (error) {
     console.log(error);
@@ -46,6 +47,7 @@ export const getCategory = async (req, res) => {
     const category = user.categories.id(req.params.categoryId);
 
     if (!category) return res.status(404).json({ msg: "category not found" });
+
     return res.status(200).json(user.categories.id(req.params.categoryId));
   } catch (error) {
     console.log(error);
@@ -81,8 +83,8 @@ export const deleteCategory = async (req, res) => {
       return res.status(404).json({ msg: "Category not found" });
     }
 
-    category.remove();
-    user.save();
+    await category.remove();
+    await user.save();
     return res.status(200).json(category);
   } catch (error) {
     console.log(error);
