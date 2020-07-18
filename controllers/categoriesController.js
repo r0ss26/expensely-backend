@@ -3,17 +3,15 @@ import { body, validationResult, param } from "express-validator";
 
 export const createCategory = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
     const { name, color, type } = req.body;
 
     const user = await User.findById(req.user.id);
 
-    if (user.categories.find((category) => category.name.toLowerCase() === name.toLowerCase())) {
+    if (
+      user.categories.find(
+        (category) => category.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
       return res.status(409).json({ msg: "Category already exists" });
     }
 
@@ -28,34 +26,35 @@ export const createCategory = async (req, res) => {
     return res.status(201).json(user.categories[user.categories.length - 1]);
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
 export const getCategories = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: error.array() });
-    }
-
     const user = await User.findById(req.user.id);
     return res.status(200).json(user.categories);
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
+  }
+};
+
+export const getCategory = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const category = user.categories.id(req.params.categoryId);
+
+    if (!category) return res.status(404).json({ msg: "category not found" });
+    return res.status(200).json(user.categories.id(req.params.categoryId));
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
 export const updateCategory = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: error.array() });
-    }
-
-    const { name, color, type } = req.body;
-
     const user = await User.findById(req.user.id);
     const category = user.categories.id(req.params.categoryId);
 
@@ -63,25 +62,18 @@ export const updateCategory = async (req, res) => {
       return res.status(404).json({ msg: "Category not found" });
     }
 
-    if (name) category.name = name;
-    if (color) category.color = color;
-    if (type) category.type = type;
-    user.save();
+    await category.set(req.body);
+    await user.save();
 
     return res.status(200).json(category);
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
 export const deleteCategory = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: error.array() });
-    }
-    
     const user = await User.findById(req.user.id);
     const category = user.categories.id(req.params.categoryId);
 
@@ -94,10 +86,11 @@ export const deleteCategory = async (req, res) => {
     return res.status(200).json(category);
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
-export const validate = (method) => {
+export const validationRules = (method) => {
   switch (method) {
     case "createCategory":
       return [
@@ -106,7 +99,10 @@ export const validate = (method) => {
         body("type").not().isEmpty().isIn(["income", "expense"]),
       ];
     case "updateCategory":
-      return [param("categoryId").exists()];
+      return [
+        param("categoryId").exists(),
+        body("type").not().isEmpty().isIn(["income", "expense"]),
+      ];
     case "deleteCategory":
       return [param("categoryId").exists()];
   }
