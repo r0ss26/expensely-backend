@@ -6,12 +6,15 @@ import userRoutes from './routes/userRoutes'
 import categoriesRoutes from './routes/categoriesRoutes'
 import authRoutes from './routes/authRoutes'
 import budgetsRoutes from './routes/budgetsRoutes'
+import transactionRoutes from './routes/transactionRoutes'
+// import expressValidator from 'express-validator'
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+// app.use(expressValidator())
 
 dotenv.config()
 
@@ -20,6 +23,7 @@ mongoose.connect(db, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false
 })
   .then(() => console.log('mongoDB connected'))
   .catch(err => console.log(err))
@@ -29,6 +33,7 @@ app.use("/users", userRoutes)
 app.use("/auth", authRoutes)
 app.use('/categories', categoriesRoutes)
 app.use("/budgets", budgetsRoutes)
+app.use("/transactions", transactionRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)

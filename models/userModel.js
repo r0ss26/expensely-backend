@@ -24,7 +24,7 @@ const CategoriesSchema = new Schema({
   },
 });
 
-export const BudgetSchema = new Schema({
+const BudgetSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -42,10 +42,13 @@ export const BudgetSchema = new Schema({
     match: /^monthly$|^weekly$/,
     lowercase: true,
   },
-  category: String,
+  category: { // Store the id of the category as a string
+    type: String,
+    required: true,
+  }, 
 });
 
-export const TransactionSchema = new Schema(
+const TransactionSchema = new Schema(
   {
     transactionType: {
       type: String,
@@ -60,14 +63,21 @@ export const TransactionSchema = new Schema(
     comment: {
       type: String,
     },
-    category: CategoriesSchema,
+    category: {
+      type: String, // The id of the category
+      required: true,
+    }, 
+    date: {
+      type: Date,
+      default: Date.now
+    }
   },
   {
     timestamps: true,
   }
 );
 
-export const UserSchema = new Schema(
+const UserSchema = new Schema(
   {
     firstName: {
       type: String,
