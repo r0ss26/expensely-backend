@@ -138,3 +138,18 @@ export const addTransaction = async (req, res) => {
 //         return res.status(500).json({ msg: "Server Error" })
 //     }
 // }
+
+export const validate = (method) => {
+  switch (method) {
+    case "addTransaction":
+      return [
+        body("transactionType")
+          .exists()
+          .not()
+          .isEmpty()
+          .isIn(["income", "expense"]),
+        body("amount").exists().not().isEmpty(),
+        body("category").exists().not().isEmpty(),
+      ];
+  }
+};

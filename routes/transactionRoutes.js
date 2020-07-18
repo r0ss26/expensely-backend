@@ -1,17 +1,14 @@
-import express from 'express'
-import auth from '../middleware/auth'
-import {
-    addTransaction,
-} from '../controllers/transactionsController'
+import express from "express";
+import auth from "../middleware/auth";
+import { addTransaction, validate } from "../controllers/transactionsController";
 
-const router = express.Router()
+const router = express.Router();
 
 // @route GET /:expenseId
 // @desc View an expense
 // @access Private
 
 // router.get('/:expenseId', auth, getExpense)
-
 
 // @route  GET /all
 // @desc View all expenses
@@ -22,7 +19,7 @@ const router = express.Router()
 // @route POST /add
 // @desc Create a new expense
 // @access Private
-router.post('/', auth, addTransaction)
+router.post("/", auth, validate("addTransaction"), addTransaction);
 
 // @route  PUT /:expenseId
 // @desc Get all expenses
@@ -36,7 +33,4 @@ router.post('/', auth, addTransaction)
 
 // router.delete("/:expenseId", auth, deleteExpense)
 
-
-
-
-module.exports = router
+module.exports = router;
