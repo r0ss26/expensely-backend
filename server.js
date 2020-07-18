@@ -7,14 +7,12 @@ import categoriesRoutes from "./routes/categoriesRoutes";
 import authRoutes from "./routes/authRoutes";
 import budgetsRoutes from "./routes/budgetsRoutes";
 import transactionRoutes from "./routes/transactionRoutes";
-import { expressValidator } from "express-validator";
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use(expressValidator());
 
 dotenv.config();
 
