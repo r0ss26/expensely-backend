@@ -26,6 +26,7 @@ const BudgetSchema = new Schema({
     type: String,
     required: true,
     trim: true,
+    lowercase: true,
   },
   amount: {
     type: Number,
@@ -55,6 +56,10 @@ const TransactionSchema = new Schema(
       type: String,
     },
     category: CategoriesSchema,
+    date: {
+      type: Date,
+      default: Date.now
+    }
   },
   {
     timestamps: true,
@@ -97,4 +102,5 @@ const UserSchema = new Schema(
   }
 );
 
+mongoose.model("Budget", BudgetSchema);
 module.exports = mongoose.model("User", UserSchema);
