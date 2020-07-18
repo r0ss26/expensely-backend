@@ -101,10 +101,10 @@ export const getTransaction = async (req, res) => {
 
     const user = await User.findById(req.user.id);
 
-    const transaction = await user.transactions.id(req.params.transactionId)
+    const transaction = await user.transactions.id(req.params.transactionId);
 
     if (!transaction) {
-      return res.status(404).json({ msg: "Transaction not found"})
+      return res.status(404).json({ msg: "Transaction not found" });
     }
 
     return res.status(200).json(transaction);
@@ -114,35 +114,28 @@ export const getTransaction = async (req, res) => {
   }
 };
 
-// export const getAllTransactions = async (req, res) => {
+export const getTransactions = async (req, res) => {
+  try {
+    const errors = validationResult(req);
 
-//     // const id = JSON.parse(req.user.id)
-//     // const ObjectId = new mongoose.ObjectId
-//     // ObjectId.createFromHexString(req.user.id)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-//     try {
-//         let Transactions = await TransactionTransaction.find({
-//             user: await User.findById(req.user.id)
-//         });
+    const user = await User.findById(req.user.id);
 
-//         //   console.log(Transactions)
-//         res.json(Transactions)
+    const transactions = user.transactions;
 
-//         // try {
-//         //     const objectId = mongoose.Types.ObjectId
-//         //     // const ObjectId = mongoose.Types.ObjectId
-//         //     //  const filter = {userreq.user.id}
-//         //     let Transactions = await TransactionTransaction.find({
-//         //         user: await User.findById(req.user.id)
-//         //     })
+    if (!transactions) {
+      return res.status(404).json({ msg: "Transaction not found" });
+    }
 
-//         //     return res.json(Transactions)
-
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({ msg: "Server Error" })
-//     }
-// }
+    return res.status(200).json(transactions);
+  } catch (error) {
+    console.log(error)
+    return res.json({ msg: "Inernal server error"})
+  }
+};
 
 export const validate = (method) => {
   switch (method) {

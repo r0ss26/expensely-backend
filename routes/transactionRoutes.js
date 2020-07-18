@@ -3,22 +3,23 @@ import auth from "../middleware/auth";
 import {
   addTransaction,
   getTransaction,
+  getTransactions,
   validate,
 } from "../controllers/transactionsController";
 
 const router = express.Router();
 
-// @route GET /:expenseId
-// @desc View an expense
+// @route GET /:transactionId
+// @desc View a transaction
 // @access Private
 
 router.get("/:transactionId", auth, getTransaction);
 
 // @route  GET /all
-// @desc View all expenses
+// @desc View all transactions
 // @access Private
 
-// router.get('/view/all', auth, getAllExpenses)
+router.get('/', auth, getTransactions)
 
 // @route POST /add
 // @desc Create a new expense
