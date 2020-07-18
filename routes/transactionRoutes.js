@@ -16,7 +16,7 @@ const router = express.Router();
 // @access Private
 router.get("/:transactionId", auth, getTransaction);
 
-// @route  GET /all
+// @route  GET /
 // @desc View all transactions
 // @access Private
 router.get('/', auth, getTransactions)

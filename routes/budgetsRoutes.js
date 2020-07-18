@@ -15,28 +15,28 @@ dotenv.config();
 
 const router = express.Router()
 
-// @route POST /budgets
+// @route POST /
 // @desc Create a new budget
 // @access private
 router.post('/', auth, validationRules('createBudget'), validate, createBudget)
 
-// @route GET /budgets
+// @route GET /
 // @desc Get a list of a users budgets
 // @access private
 router.get('/', auth, getBudgets)
 
-// @route GET /budgets/budgetId
+// @route GET /budgetId
 // @desc Get a list of a users budgets
 // @access private
 router.get('/:budgetId', auth, getBudget)
 
-// @route PUT/PATCH /budgets/budgetId
+// @route PUT/PATCH /budgetId
 // @desc Edit an existing budget
 // @access private
 router.put('/:budgetId', auth, validationRules('updateBudget'), validate, updateBudget)
 router.patch('/:budgetId', auth, validationRules('updateBudget'), validate, updateBudget)
 
-// @route DELETE /budgets
+// @route DELETE /budgetId
 // @desc Delete an existing budget
 // @access private
 router.delete('/:budgetId', auth, deleteBudget)

@@ -15,28 +15,28 @@ dotenv.config();
 
 const router = express.Router()
 
-// @route POST /categories
+// @route POST /
 // @desc Create a new category
 // @access private
 router.post('/', auth, validationRules('createCategory'), validate, createCategory)
 
-// @route GET /categories
+// @route GET /
 // @desc Get a list of categories
 // @access private
 router.get('/', auth, getCategories)
 
-// @route GET /categories/categoryId
+// @route GET /categoryId
 // @desc Get a list of categories
 // @access private
 router.get('/:categoryId', auth, getCategory)
 
-// @route PUT/PATCH /categories
+// @route PUT/PATCH /
 // @desc Edit an existing category
 // @access private
 router.put('/:categoryId', auth, validationRules('updateCategory'), validate, updateCategory)
 router.patch('/:categoryId', auth, validationRules('updateCategory'), validate, updateCategory)
 
-// @route DELETE /categories
+// @route DELETE /categoryId
 // @desc Delete an existing category
 // @access private
 router.delete('/:categoryId', auth, deleteCategory)
