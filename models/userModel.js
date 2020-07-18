@@ -9,7 +9,6 @@ const CategoriesSchema = new Schema({
     type: String,
     required: true,
     lowercase: true,
-    unique: true,
   },
   color: {
     type: String,
@@ -30,7 +29,6 @@ const BudgetSchema = new Schema({
     required: true,
     trim: true,
     lowercase: true,
-    unique: true,
   },
   amount: {
     type: Number,
