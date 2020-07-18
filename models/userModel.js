@@ -37,7 +37,10 @@ const BudgetSchema = new Schema({
     required: true,
     match: /^monthly$|^weekly$/,
   },
-  category: String, // Store the id of the category
+  category: { // Store the id of the category as a string
+    type: String,
+    required: true,
+  }, 
 });
 
 const TransactionSchema = new Schema(
@@ -55,7 +58,10 @@ const TransactionSchema = new Schema(
     comment: {
       type: String,
     },
-    category: String, // The id of the category
+    category: {
+      type: String, // The id of the category
+      required: true,
+    }, 
     date: {
       type: Date,
       default: Date.now
