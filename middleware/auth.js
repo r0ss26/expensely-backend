@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 const secret = process.env.SECRET;
@@ -9,10 +9,10 @@ module.exports = function (req, res, next) {
   //check req.headers for token
   if (req.headers.authorization) {
     //get token from headers
-    token = req.headers.authorization.split(" ")[1];
+    token = req.headers.authorization.split(' ')[1];
   } else {
     //return error if no token
-    return res.status(401).json({ msg: "No token, Not authorized" });
+    return res.status(401).json({ msg: 'No token, Not authorized' });
   }
 
   try {
@@ -23,6 +23,6 @@ module.exports = function (req, res, next) {
 
     next();
   } catch (error) {
-    res.status(401).json({ msg: "token is not valid" });
+    res.status(401).json({ msg: 'token is not valid' });
   }
 };

@@ -1,20 +1,14 @@
-import User from "../models/userModel";
-import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import { body, validationResult } from "express-validator";
+import User from '../models/userModel';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import { body, validationResult } from 'express-validator';
 
 dotenv.config();
 const secret = process.env.SECRET;
 
 export const userRegister = async (req, res) => {
   try {
-    // const errors = validationResult(req)
-
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() })
-    // }
-
     const { firstName, lastName, email, password } = req.body;
 
     //check if email exists
@@ -22,7 +16,7 @@ export const userRegister = async (req, res) => {
 
     //if user email exist, send a message
     if (user) {
-      return res.status(400).send({ msg: "Email already exists." });
+      return res.status(400).send({ msg: 'Email already exists.' });
     }
     // or if email not exist, create a new user
     user = new User({
@@ -52,7 +46,7 @@ export const userRegister = async (req, res) => {
       payload,
       secret,
       {
-        expiresIn: "10h",
+        expiresIn: '10h',
       },
       (err, token) => {
         if (err) throw err;
@@ -61,25 +55,25 @@ export const userRegister = async (req, res) => {
     );
   } catch (error) {
     console.log(error.message);
-    res.status(500).send({ msg: "Internal server error" });
+    res.status(500).send({ msg: 'Internal server error' });
   }
 };
 
 export const validationRules = (method) => {
   switch (method) {
-    case "userSignUp": {
+    case 'userSignUp': {
       return [
         // firstname required
-        body("firstName", "First name is required").not().isEmpty(),
+        body('firstName', 'First name is required').not().isEmpty(),
 
         //last name required
-        body("lastName", "Last name is required").not().isEmpty(),
+        body('lastName', 'Last name is required').not().isEmpty(),
 
         //email required
-        body("email", "Please include a valid email.").isEmail(),
+        body('email', 'Please include a valid email.').isEmail(),
 
         // password must be at least 6 chars long
-        body("password").isLength({ min: 6 }),
+        body('password').isLength({ min: 6 }),
       ];
     }
   }

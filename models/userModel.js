@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import getRandomColor from "../utils/getRandomColor";
+import getRandomColor from '../utils/getRandomColor';
 
 const Schema = mongoose.Schema;
 
@@ -40,10 +40,11 @@ const BudgetSchema = new Schema({
     match: /^monthly$|^weekly$/,
     lowercase: true,
   },
-  category: { // Store the id of the category as a string
+  category: {
+    // Store the id of the category as a string
     type: String,
     required: true,
-  }, 
+  },
 });
 
 const TransactionSchema = new Schema(
@@ -64,11 +65,11 @@ const TransactionSchema = new Schema(
     category: {
       type: String, // The id of the category
       required: true,
-    }, 
+    },
     date: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
@@ -112,4 +113,4 @@ const UserSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);
