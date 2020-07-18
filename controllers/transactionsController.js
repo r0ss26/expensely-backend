@@ -64,29 +64,27 @@ export const editTransaction = async (req, res) => {
   }
 };
 
-// export const deleteTransaction = async (req, res) => {
+export const deleteTransaction = async (req, res) => {
+  try {
 
-//     try {
+    const user = await User.findById(req.user.id)
 
-//         let Transaction = await TransactionTransaction
-//             .findById(req.params.TransactionId)
+    let transaction = user.transactions.id(req.params.transactionId);
 
-//         if (!Transaction) {
-//             return res.status(404).send({ error: "Transaction not found!" })
-//         }
+    if (!transaction) {
+      return res.status(404).send({ error: "Transaction not found!" });
+    }
 
-//         await Transaction.remove(req.params.TransactionId)
+    transaction.remove();
+    user.save();
 
-//         //  console.log(Transaction)
-//         return res.status(200).json({ msg: "Transaction deleted" })
-
-//     } catch (error) {
-
-//         console.log(error);
-//         return res.status(500).send({ msg: "Server Error" })
-//     }
-
-// }
+    //  console.log(Transaction)
+    return res.status(200).json(transaction);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ msg: "Server Error" });
+  }
+};
 
 export const getTransaction = async (req, res) => {
   try {

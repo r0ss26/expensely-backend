@@ -5,6 +5,7 @@ import {
   getTransaction,
   getTransactions,
   editTransaction,
+  deleteTransaction,
   validate,
 } from "../controllers/transactionsController";
 
@@ -34,7 +35,6 @@ router.patch("/:transactionId", auth, editTransaction)
 // @route DELETE /:expenseId
 // @desc Delete an expense
 // @access Private
-
-// router.delete("/:expenseId", auth, deleteExpense)
+router.delete("/:transactionId", auth, deleteTransaction)
 
 module.exports = router;
