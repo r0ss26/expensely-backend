@@ -32,40 +32,37 @@ export const addTransaction = async (req, res) => {
   }
 };
 
-// export const editTransaction = async (req, res) => {
+export const editTransaction = async (req, res) => {
+  try {
+    const errors = validationResult(req);
 
-//     try {
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-//         let Transaction = await TransactionTransaction
-//             .findById(req.params.TransactionId)
-//             .populate("user", "id")
+    const user = await User.findById(req.user.id);
 
-//         if (!Transaction) {
-//             return res.status(404).send({ error: "Transaction not found!" })
-//         }
+    const transaction = await user.transactions.id(req.params.transactionId);
 
-//         // console.log(req.user.id)
-//         // console.log(Transaction.user.id)
-//         // let hasAuthorization = Transaction.user.id == req.user.id
-//         // if (!hasAuthorization) {
-//         //     return res.status(401).json({ msg: "Permission denied." })
-//         // }
+    const { amount, transactionType, category, comment } = req.body;
 
-//         Transaction = await TransactionTransaction.findByIdAndUpdate(
-//             req.params.TransactionId,
-//             { $set: req.body },
-//             { new: true }
-//         )
+    if (!transaction) {
+      return res.status(404).send({ error: "Transaction not found!" });
+    }
 
-//         //  console.log(Transaction)
-//         return res.status(200).json(Transaction)
+    if (amount) transaction.amount = amount;
+    if (transactionType) transaction.transactionType = transactionType;
+    if (category) transaction.category = category;
+    if (comment) transaction.comment = comment;
 
-//     } catch (error) {
+    await user.save();
 
-//         console.log(error);
-//         return res.status(500).send({ msg: "Server Error" })
-//     }
-// }
+    return res.status(200).json(transaction);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ msg: "Server Error" });
+  }
+};
 
 // export const deleteTransaction = async (req, res) => {
 
@@ -132,8 +129,8 @@ export const getTransactions = async (req, res) => {
 
     return res.status(200).json(transactions);
   } catch (error) {
-    console.log(error)
-    return res.json({ msg: "Inernal server error"})
+    console.log(error);
+    return res.json({ msg: "Inernal server error" });
   }
 };
 
