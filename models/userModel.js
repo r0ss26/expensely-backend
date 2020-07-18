@@ -54,23 +54,7 @@ const TransactionSchema = new Schema(
     comment: {
       type: String,
     },
-    category: {
-      name: {
-        type: String,
-        required: true,
-      },
-      color: {
-        type: String,
-        default: getRandomColor,
-      },
-      type: {
-        type: String,
-        required: true,
-        lowercase: true,
-        match: /^income$|^expense$/,
-      },
-    },
-    category: String,
+    category: CategoriesSchema,
   },
   {
     timestamps: true,

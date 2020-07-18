@@ -1,12 +1,8 @@
 import express from 'express'
 import auth from '../middleware/auth'
 import {
-    addExpense,
-    editExpense,
-    deleteExpense,
-    getExpense,
-    getAllExpenses
-} from '../controllers/expenseController'
+    addTransaction,
+} from '../controllers/transactionsController'
 
 const router = express.Router()
 
@@ -14,32 +10,31 @@ const router = express.Router()
 // @desc View an expense
 // @access Private
 
-router.get('/:expenseId', auth, getExpense)
+// router.get('/:expenseId', auth, getExpense)
 
 
 // @route  GET /all
 // @desc View all expenses
 // @access Private
 
-router.get('/view/all', auth, getAllExpenses)
+// router.get('/view/all', auth, getAllExpenses)
 
 // @route POST /add
 // @desc Create a new expense
 // @access Private
-
-router.post('/add/new', auth, addExpense)
+router.post('/', auth, addTransaction)
 
 // @route  PUT /:expenseId
 // @desc Get all expenses
 // @access Private
 
-router.put("/:expenseId", auth, editExpense)
+// router.put("/:expenseId", auth, editExpense)
 
 // @route DELETE /:expenseId
 // @desc Delete an expense
 // @access Private
 
-router.delete("/:expenseId", auth, deleteExpense)
+// router.delete("/:expenseId", auth, deleteExpense)
 
 
 
