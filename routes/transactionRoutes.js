@@ -1,6 +1,10 @@
 import express from "express";
 import auth from "../middleware/auth";
-import { addTransaction, validate } from "../controllers/transactionsController";
+import {
+  addTransaction,
+  getTransaction,
+  validate,
+} from "../controllers/transactionsController";
 
 const router = express.Router();
 
@@ -8,7 +12,7 @@ const router = express.Router();
 // @desc View an expense
 // @access Private
 
-// router.get('/:expenseId', auth, getExpense)
+router.get("/:transactionId", auth, getTransaction);
 
 // @route  GET /all
 // @desc View all expenses

@@ -91,23 +91,28 @@ export const addTransaction = async (req, res) => {
 
 // }
 
-// export const getTransaction = async (req, res) => {
+export const getTransaction = async (req, res) => {
+  try {
+    const errors = validationResult(req);
 
-//     try {
-//         let Transaction = await TransactionTransaction
-//             .findById(req.params.TransactionId)
-//             .populate("user", "id")
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-//         console.log(Transaction)
-//         return res.json(Transaction)
+    const user = await User.findById(req.user.id);
 
-//     } catch (error) {
+    const transaction = await user.transactions.id(req.params.transactionId)
 
-//         console.log(error);
-//         return res.status(500).json({ msg: "Server Error" })
-//     }
+    if (!transaction) {
+      return res.status(404).json({ msg: "Transaction not found"})
+    }
 
-// }
+    return res.status(200).json(transaction);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Server Error" });
+  }
+};
 
 // export const getAllTransactions = async (req, res) => {
 
