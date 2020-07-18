@@ -13,7 +13,7 @@ export const getLoginUser = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server Error");
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 

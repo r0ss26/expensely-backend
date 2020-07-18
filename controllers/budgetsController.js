@@ -3,12 +3,6 @@ import { body, validationResult, param } from "express-validator";
 
 export const createBudget = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
     const { name, amount, timePeriod, category } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -17,7 +11,7 @@ export const createBudget = async (req, res) => {
       (budget) => budget.name.toLowerCase() === name.toLowerCase()
     );
     if (budget) {
-      return res.json({ msg: "budget already exists" });
+      return res.status(409).json({ msg: "budget already exists" });
     }
 
     const newbudget = {
@@ -32,35 +26,32 @@ export const createBudget = async (req, res) => {
     return res.status(201).json(user.budgets[user.budgets.length - 1]);
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
 export const getBudgets = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: error.array() });
-    }
-
     const user = await User.findById(req.user.id);
-
     return res.status(200).json(user.budgets);
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
+  }
+};
+
+export const getBudget = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.status(200).json(user.budgets.id(req.params.budgetId));
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
 export const updateBudget = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { name, amount, timePeriod, category } = req.body;
-
     const user = await User.findById(req.user.id);
     const budget = user.budgets.id(req.params.budgetId);
 
@@ -68,16 +59,13 @@ export const updateBudget = async (req, res) => {
       return res.status(404).json({ msg: "budget not found" });
     }
 
-    if (name) budget.name = name;
-    if (amount) budget.amount = amount;
-    if (timePeriod) budget.timePeriod = timePeriod;
-    if (category) budget.category = category;
+    budget.set(req.body)
 
     user.save();
-
     return res.status(200).json(budget);
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
@@ -93,12 +81,14 @@ export const deleteBudget = async (req, res) => {
     budget.remove();
     user.save();
     return res.status(200).json(budget);
+
   } catch (error) {
     console.log(error);
+    res.status(500).send({ msg: "Internal server error" });
   }
 };
 
-export const validate = (method) => {
+export const validationRules = (method) => {
   switch (method) {
     case "createBudget":
       return [

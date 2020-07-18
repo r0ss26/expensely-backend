@@ -3,34 +3,41 @@ import dotenv from 'dotenv'
 import auth from '../middleware/auth'
 import {
   createBudget,
+  getBudget,
   getBudgets,
   updateBudget,
   deleteBudget,
-  validate
+  validationRules
 } from '../controllers/budgetsController'
+import { validate } from '../middleware/validate'
 
 dotenv.config();
 
 const router = express.Router()
 
-// @route POST /categories
-// @desc Create a new category
+// @route POST /budgets
+// @desc Create a new budget
 // @access private
-router.post('/', auth, validate('createBudget'), createBudget)
+router.post('/', auth, validationRules('createBudget'), validate, createBudget)
 
-// @route GET /categories
-// @desc Get a list of categories
+// @route GET /budgets
+// @desc Get a list of a users budgets
 // @access private
 router.get('/', auth, getBudgets)
 
-// @route PUT/PATCH /categories
-// @desc Edit an existing category
+// @route GET /budgets/budgetId
+// @desc Get a list of a users budgets
 // @access private
-router.put('/:budgetId', auth, validate('updateBudget'), updateBudget)
-router.patch('/:budgetId', auth, validate('updateBudget'), updateBudget)
+router.get('/:budgetId', auth, getBudget)
 
-// @route DELETE /categories
-// @desc Delete an existing category
+// @route PUT/PATCH /budgets/budgetId
+// @desc Edit an existing budget
+// @access private
+router.put('/:budgetId', auth, validationRules('updateBudget'), validate, updateBudget)
+router.patch('/:budgetId', auth, validationRules('updateBudget'), validate, updateBudget)
+
+// @route DELETE /budgets
+// @desc Delete an existing budget
 // @access private
 router.delete('/:budgetId', auth, deleteBudget)
 
