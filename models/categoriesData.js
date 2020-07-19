@@ -75,7 +75,7 @@ const categoriesData = [
         type: "expense"
     },
     {
-        name: "Utilities",
+        name: "general expenses",
         icon: "fas fa-tags",
         color: getRandomColor(),
         type: "expense"
