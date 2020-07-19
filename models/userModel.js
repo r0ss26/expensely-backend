@@ -10,6 +10,9 @@ const CategoriesSchema = new Schema({
     required: true,
     lowercase: true,
   },
+  icon: {
+    type: String,
+  }, 
   color: {
     type: String,
     default: getRandomColor,

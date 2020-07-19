@@ -7,15 +7,20 @@ import categoriesRoutes from "./routes/categoriesRoutes";
 import authRoutes from "./routes/authRoutes";
 import budgetsRoutes from "./routes/budgetsRoutes";
 import transactionRoutes from "./routes/transactionRoutes";
+import {seedData } from './models/categoriesData'
+
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
+seedData
+
 app.use(cors());
 app.use(express.json());
 
-dotenv.config();
-
+//connect to mongoDB
 const db = process.env.DB_URL;
 mongoose
   .connect(db, {
@@ -26,6 +31,7 @@ mongoose
   })
   .then(() => console.log("mongoDB connected"))
   .catch((err) => console.log(err));
+
 
 //use routes
 app.use("/users", userRoutes);

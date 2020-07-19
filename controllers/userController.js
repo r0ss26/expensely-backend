@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { body, validationResult } from 'express-validator';
+import { seedCategories } from '../models/categoriesData'
+
 
 dotenv.config();
 const secret = process.env.SECRET;
@@ -24,7 +26,10 @@ export const userRegister = async (req, res) => {
       lastName,
       email,
       password,
-    });
+    })
+
+    //seed user model with categories data
+    seedCategories(user)
 
     //geneate salt of length 10 and save to salt
     const salt = await bcrypt.genSalt(10);
