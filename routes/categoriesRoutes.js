@@ -23,8 +23,7 @@ router.post(
   auth,
   validationRules('createCategory'),
   validate,
-  createCategory
-);
+  createCategory);
 
 // @route GET /
 // @desc Get a list of categories

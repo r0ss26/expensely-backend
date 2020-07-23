@@ -4,111 +4,111 @@ const categoriesData = [
 
     {
         name: "Eating Out",
-        icon: "restaurant_menu",
+        icon: "fas fa-utensils",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Apparel",
-        icon: "style",
+        icon: "fas fa-tshirt",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Entertainment",
-        icon: "library_music",
+        icon: "fas fa-tablet-alt",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Fuel",
-        icon: "local_gas_station",
+        icon: "fas fa-gas-pump",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Gifts",
-        icon: "card_giftcard",
+        icon: "fas fa-gift",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Holidays",
-        icon: "flight_takeoff",
+        icon: "fas fa-luggage-cart",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Grocery",
-        icon: "add_shopping_cart",
+        icon: "fas fa-shopping-basket",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Transportation",
-        icon: "subway",
+        icon: "fas fa-bus",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Sports",
         icon: "directions_bike",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Books",
-        icon: "local_library",
+        icon: "fas fa-book-open",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Medical",
-        icon: "local_pharmacy",
+        icon: "fas fa-notes-medical",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Utilities",
-        icon: "flash_on",
+        icon: "fas fa-bolt",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Movies",
-        icon: "local_movies",
+        icon: 'fas fa-film',
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Work-related",
-        icon: "work",
+        icon: "fas fa-briefcase",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Pets",
-        icon: "pets",
+        icon: "fas fa-paw",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Mobile",
-        icon: "phone_iphone",
+        icon: "fas fa-mobile-alt",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "general expenses",
-        icon: "loyalty",
+        icon: "fas fa-tags",
         color: getRandomColor(),
-        type: "expense"
+        transactionType: "expense"
     },
     {
         name: "Salary",
-        icon: "monetization_on",
+        icon: "fas fa-money-bill-wave",
         color: getRandomColor(),
-        type: "income"
+        transactionType: "income"
     },
 ]
 

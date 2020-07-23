@@ -5,13 +5,16 @@ dotenv.config();
 const secret = process.env.SECRET;
 
 module.exports = function (req, res, next) {
-  let token;
+  //let token;
   //check req.headers for token
- // console.log(req.headers)
+  // console.log(req.headers)
+  let token;
+
   if (req.headers.authorization) {
-    //get token from headers
+    //   //get token from headers
     token = req.headers.authorization;
-   // console.log(token)
+    // token = req.headers.authorization.split(' ')[1];
+    //  // console.log(token)
   } else {
     //return error if no token
     return res.status(401).json({ msg: 'No token, Not authorized' });

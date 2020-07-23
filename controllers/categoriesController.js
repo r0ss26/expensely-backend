@@ -2,8 +2,9 @@ import User from '../models/userModel';
 import { body, validationResult, param } from 'express-validator';
 
 export const createCategory = async (req, res) => {
+  // console.log("req body", req.body)
   try {
-    const { name, color, type } = req.body;
+    const { name, color, transactionType } = req.body;
 
     const user = await User.findById(req.user.id);
 
@@ -18,12 +19,12 @@ export const createCategory = async (req, res) => {
     const newCategory = {
       name,
       color,
-      type,
+      transactionType,
     };
 
     await user.categories.push(newCategory);
     await user.save();
-
+    // console.log("saved", user)
     return res.status(201).json(user.categories[user.categories.length - 1]);
   } catch (error) {
     console.log(error);
@@ -57,6 +58,7 @@ export const getCategory = async (req, res) => {
 
 export const updateCategory = async (req, res) => {
   try {
+
     const user = await User.findById(req.user.id);
     const category = user.categories.id(req.params.categoryId);
 
@@ -66,7 +68,6 @@ export const updateCategory = async (req, res) => {
 
     await category.set(req.body);
     await user.save();
-
     return res.status(200).json(category);
   } catch (error) {
     console.log(error);
@@ -98,12 +99,12 @@ export const validationRules = (method) => {
       return [
         body('name').exists().not().isEmpty(),
         body('color').optional().isRgbColor(),
-        body('type').not().isEmpty().isIn(['income', 'expense']),
+        body('transactionType').not().isEmpty().isIn(['income', 'expense']),
       ];
     case 'updateCategory':
       return [
         param('categoryId').exists(),
-        body('type').optional().isIn(['income', 'expense']),
+        body('transactionType').optional().isIn(['income', 'expense']),
       ];
     case 'deleteCategory':
       return [param('categoryId').exists()];

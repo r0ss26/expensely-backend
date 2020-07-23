@@ -12,13 +12,13 @@ const CategoriesSchema = new Schema({
   },
   icon: {
     type: String,
-  }, 
+  },
   color: {
     type: String,
     default: getRandomColor,
     lowercase: true,
   },
-  type: {
+  transactionType: {
     type: String,
     required: true,
     match: /^income$|^expense$/,
