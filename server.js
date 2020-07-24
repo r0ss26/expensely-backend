@@ -7,7 +7,7 @@ import categoriesRoutes from "./routes/categoriesRoutes";
 import authRoutes from "./routes/authRoutes";
 import budgetsRoutes from "./routes/budgetsRoutes";
 import transactionRoutes from "./routes/transactionRoutes";
-import {seedData } from './models/categoriesData'
+import { seedData } from './models/categoriesData'
 
 
 dotenv.config();
@@ -19,6 +19,8 @@ seedData
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })) //Parse URL-encoded bodies
+app.use("/uploads", express.static('public'));
 
 //connect to mongoDB
 const db = process.env.DB_URL;

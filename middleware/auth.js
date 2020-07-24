@@ -5,15 +5,19 @@ dotenv.config();
 const secret = process.env.SECRET;
 
 module.exports = function (req, res, next) {
-  //let token;
-  //check req.headers for token
-  // console.log(req.headers)
-  let token;
+  
+  //change token header for backend testing with postman
+  // const token = req.header('x-auth-token');
+  // // Check if not token
+  // if (!token) {
+  //   return res.status(401).json({ msg: 'No token, Not authorized' });
+  // }
 
+  //token header for frontend
+  let token;
   if (req.headers.authorization) {
     //   //get token from headers
     token = req.headers.authorization;
-    // token = req.headers.authorization.split(' ')[1];
     //  // console.log(token)
   } else {
     //return error if no token

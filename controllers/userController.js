@@ -2,7 +2,7 @@ import User from '../models/userModel';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { body, validationResult } from 'express-validator';
+import { body, check } from 'express-validator';
 import { seedCategories } from '../models/categoriesData'
 
 
@@ -64,6 +64,40 @@ export const userRegister = async (req, res) => {
   }
 };
 
+
+export const userUpdate = async (req, res) => {
+  console.log(req.body)
+  try {
+
+    const { firstName, lastName, email } = req.body
+
+    let profileImage;
+    if (req.file) {
+      profileImage = req.file.location
+    }
+
+    let user = await User.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        '$set':
+        {
+          firstName,
+          lastName,
+          email,
+          profileImage
+        }
+      },
+      { new: true })
+
+    await user.save();
+    return res.status(200).json(user);
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ msg: 'Internal server error' });
+  }
+}
+
 export const validationRules = (method) => {
   switch (method) {
     case 'userSignUp': {
@@ -81,5 +115,18 @@ export const validationRules = (method) => {
         body('password').isLength({ min: 6 }),
       ];
     }
+    case 'userUpdate': {
+      return [
+        // firstname required
+        body('firstName', 'First name is required').not().isEmpty(),
+
+        //last name required
+        body('lastName', 'Last name is required').not().isEmpty(),
+
+        //email required
+        body('email', 'Please include a valid email.').isEmail(),
+      ]
+    }
   }
 };
+
