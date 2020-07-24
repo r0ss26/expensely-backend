@@ -28,16 +28,6 @@ const s3 = new aws.S3({
 //     }
 // })
 
-
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, "./uploads");
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, new Date().toISOString() + path.extname(file.originalname));
-//     }
-// })
-
 // Check File Type
 //define filter for multer uploads
 const fileFilter = (req, file, cb) => {
@@ -72,12 +62,12 @@ const upload = multer({
             cb(null, { fieldName: file.fieldname })
         },
         key: function (req, file, cb) {
-            console.log("file", file)
+            // console.log("file", file)
             //cb(null, Date.now().toString() + '-' + file.originalname)
             cb(null, Date.now().toString() + '-' + path.extname(file.originalname));
         }
     }),
-    limits: { fileSize: 10000000 }, // In bytes: 2000000 bytes = 5 MB
+    limits: { fileSize: 2000000 }, // In bytes: 2000000 bytes = 5 MB
     fileFilter: fileFilter
 
 })

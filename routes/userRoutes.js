@@ -15,11 +15,8 @@ router.post('/register', validationRules('userSignUp'), validate, userRegister);
 //  @desc Update user profile 
 //  @access Private
 
-// router.patch(
-//     '/:userId',
-//     upload.single('imageProfile'),
-//     userUpdate
-// );
+
 router.put('/:id', auth, upload.single('profileImage'), validationRules('userUpdate'), validate, userUpdate);
+router.patch('/:id', auth, upload.single('profileImage'), validationRules('userUpdate'), validate, userUpdate);
 
 module.exports = router;
