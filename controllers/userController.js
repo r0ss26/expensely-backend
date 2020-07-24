@@ -66,30 +66,37 @@ export const userRegister = async (req, res) => {
 
 
 export const userUpdate = async (req, res) => {
-  console.log(req.body)
+
   try {
-
-    const { firstName, lastName, email } = req.body
-
+   
     let profileImage;
     if (req.file) {
       profileImage = req.file.location
     }
 
-    let user = await User.findOneAndUpdate(
-      { _id: req.user.id },
-      {
-        '$set':
-        {
-          firstName,
-          lastName,
-          email,
-          profileImage
-        }
-      },
-      { new: true })
+    const { firstName, lastName, email } = req.body
 
-    await user.save();
+    const userInput = {}
+    if (firstName) userInput.firstName = firstName
+    if (lastName) userInput.lastName = lastName
+    if (email) userInput.email = email
+    if (profileImage) userInput.profileImage = profileImage
+
+    let user = await User.findById(req.params.id).select('-password')
+    // console.log("nopass", user)
+
+    if (!user) return res.status(404).json({ msg: 'User not found' })
+
+    if (user._id.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "No authorization" })
+    }
+
+    user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: userInput },
+      { new: true })
+    //   await user.set({firstName, lastName, email});
+   //console.log("user2", user)
     return res.status(200).json(user);
 
   } catch (error) {
