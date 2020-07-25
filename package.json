@@ -30,6 +30,8 @@
   "dependencies": {
     "aws-sdk": "^2.719.0",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
     "bcryptjs": "^2.4.3",
