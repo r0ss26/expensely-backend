@@ -166,7 +166,7 @@ var userUpdate = exports.userUpdate = function () {
               break;
             }
 
-            return _context2.abrupt('return', res.status(401).json({ msg: "No authorization" }));
+            return _context2.abrupt('return', res.status(401).json({ msg: "Not authorized" }));
 
           case 16:
             _context2.next = 18;

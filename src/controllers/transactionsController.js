@@ -2,10 +2,25 @@ import User from '../models/userModel';
 import { body, validationResult, param } from 'express-validator';
 
 export const addTransaction = async (req, res) => {
+
   try {
+    const { amount, date, transactionType } = req.body;
     const user = await User.findById(req.user.id);
 
-    const newTransaction = { ...req.body };
+    const newTransaction = {}
+    const category = {}
+    user.categories.map(item => {
+      if (item._id.toString() === req.body.category.toString()) {
+        for (const i in item) {
+          category[i] = item[i]
+        }
+      }
+    })
+
+    newTransaction.category = category
+    if (amount) newTransaction.amount = amount
+    if (date) newTransaction.date = date
+    if (transactionType) newTransaction.transactionType = transactionType
 
     await user.transactions.push(newTransaction);
     await user.save();

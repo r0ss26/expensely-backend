@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.validationRules = exports.loginUser = exports.getLoginUser = undefined;
+exports.validationRules = exports.changePassword = exports.loginUser = exports.getLoginUser = undefined;
 
 var _userModel = require('../models/userModel');
 
@@ -144,6 +144,91 @@ var loginUser = exports.loginUser = function () {
   };
 }();
 
+var changePassword = exports.changePassword = function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
+    var _req$body2, currentPassword, password, user, isMatch, salt;
+
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _req$body2 = req.body, currentPassword = _req$body2.currentPassword, password = _req$body2.password;
+            // console.log("currentPassord", currentPassword)
+            // console.log("password", password)
+            // console.log("user", user)
+            //find user by id
+
+            _context3.next = 4;
+            return _userModel2.default.findById(req.params.id);
+
+          case 4:
+            user = _context3.sent;
+
+            if (user) {
+              _context3.next = 7;
+              break;
+            }
+
+            return _context3.abrupt('return', res.status(404).json({ msg: 'User not found' }));
+
+          case 7:
+            if (!(user._id.toString() !== req.user.id)) {
+              _context3.next = 9;
+              break;
+            }
+
+            return _context3.abrupt('return', res.status(401).json({ msg: "Not authorized" }));
+
+          case 9:
+            _context3.next = 11;
+            return _bcryptjs2.default.compare(currentPassword, user.password);
+
+          case 11:
+            isMatch = _context3.sent;
+
+
+            if (!isMatch) {
+              res.status(400).json({ msg: 'invalid credentials' });
+            }
+
+            //geneate salt of length 10 and save to salt
+            _context3.next = 15;
+            return _bcryptjs2.default.genSalt(10);
+
+          case 15:
+            salt = _context3.sent;
+            _context3.next = 18;
+            return _bcryptjs2.default.hash(password, salt);
+
+          case 18:
+            user.password = _context3.sent;
+            _context3.next = 21;
+            return user.save();
+
+          case 21:
+            return _context3.abrupt('return', res.status(200).json(user));
+
+          case 24:
+            _context3.prev = 24;
+            _context3.t0 = _context3['catch'](0);
+
+            console.log(_context3.t0.message);
+            res.status(500).send({ msg: 'Internal server error' });
+
+          case 28:
+          case 'end':
+            return _context3.stop();
+        }
+      }
+    }, _callee3, undefined, [[0, 24]]);
+  }));
+
+  return function changePassword(_x5, _x6) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
 var validationRules = exports.validationRules = function validationRules(method) {
   switch (method) {
     case 'userLogin':
@@ -154,6 +239,10 @@ var validationRules = exports.validationRules = function validationRules(method)
 
         // password must be at least 6 chars long
         (0, _expressValidator.body)('password').isLength({ min: 6 })];
+      }
+    case 'changePassword':
+      {
+        return [(0, _expressValidator.body)('password').isLength({ min: 6 })];
       }
   }
 };

@@ -28,8 +28,6 @@ router.post('/register', (0, _userController.validationRules)('userSignUp'), _va
 //  @route PUT/PATCH /users/userId
 //  @desc Update user profile 
 //  @access Private
-
-
 router.put('/:id', _auth2.default, _upload2.default.single('profileImage'), (0, _userController.validationRules)('userUpdate'), _validate.validate, _userController.userUpdate);
 router.patch('/:id', _auth2.default, _upload2.default.single('profileImage'), (0, _userController.validationRules)('userUpdate'), _validate.validate, _userController.userUpdate);
 

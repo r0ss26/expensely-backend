@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.validationRules = exports.getTransactions = exports.getTransaction = exports.deleteTransaction = exports.editTransaction = exports.addTransaction = undefined;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _userModel = require('../models/userModel');
 
 var _userModel2 = _interopRequireDefault(_userModel);
@@ -19,41 +17,66 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var addTransaction = exports.addTransaction = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var user, newTransaction;
+    var _req$body, amount, date, transactionType, user, newTransaction, category;
+
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _context.next = 3;
+            _req$body = req.body, amount = _req$body.amount, date = _req$body.date, transactionType = _req$body.transactionType;
+            _context.next = 4;
             return _userModel2.default.findById(req.user.id);
 
-          case 3:
+          case 4:
             user = _context.sent;
-            newTransaction = _extends({}, req.body);
-            _context.next = 7;
+
+            //console.log("cate", user.categories)
+            // let getCategory = {}
+
+            //console.log("re parse", req.body.category)
+
+            newTransaction = {};
+            category = {};
+
+            user.categories.map(function (item) {
+              if (item._id.toString() === req.body.category.toString()) {
+                for (var i in item) {
+                  // if (i === 'color' || i === 'name')
+                  category[i] = item[i];
+                }
+              }
+            });
+
+            newTransaction.category = category;
+            if (amount) newTransaction.amount = amount;
+            if (date) newTransaction.date = date;
+            if (transactionType) newTransaction.transactionType = transactionType;
+            console.log(newTransaction);
+
+            _context.next = 15;
             return user.transactions.push(newTransaction);
 
-          case 7:
-            _context.next = 9;
+          case 15:
+            _context.next = 17;
             return user.save();
 
-          case 9:
+          case 17:
             return _context.abrupt('return', res.status(201).json(user.transactions[user.transactions.length - 1]));
 
-          case 12:
-            _context.prev = 12;
+          case 20:
+            _context.prev = 20;
             _context.t0 = _context['catch'](0);
 
             console.log(_context.t0);
             return _context.abrupt('return', res.status(400).json({ msg: 'Error creating new Transaction' }));
 
-          case 16:
+          case 24:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[0, 12]]);
+    }, _callee, undefined, [[0, 20]]);
   }));
 
   return function addTransaction(_x, _x2) {

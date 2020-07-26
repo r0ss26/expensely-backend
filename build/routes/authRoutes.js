@@ -21,10 +21,16 @@ var router = _express2.default.Router();
 // @access Private
 router.get('/', _auth2.default, _authController.getLoginUser);
 
-// @route POST /login
+// @route POST /auth/login
 // @desc login user
 // @access public
 router.post('/login', (0, _authController.validationRules)('userLogin'), _validate.validate, _authController.loginUser);
+
+// @route PUT /auth/reset/:id
+// @desc change password
+// @access private
+router.put('/reset/:id', _auth2.default, (0, _authController.validationRules)('changePassword'), _validate.validate, _authController.changePassword);
+router.patch('/reset/:id', _auth2.default, (0, _authController.validationRules)('changePassword'), _validate.validate, _authController.changePassword);
 
 module.exports = router;
 //# sourceMappingURL=authRoutes.js.map
