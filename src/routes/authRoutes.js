@@ -3,6 +3,7 @@ import auth from '../middleware/auth';
 import {
   getLoginUser,
   loginUser,
+  changePassword,
   validationRules,
 } from '../controllers/authController';
 import { validate } from '../middleware/validate';
@@ -14,9 +15,16 @@ const router = express.Router();
 // @access Private
 router.get('/', auth, getLoginUser);
 
-// @route POST /login
+// @route POST /auth/login
 // @desc login user
 // @access public
 router.post('/login', validationRules('userLogin'), validate, loginUser);
+
+
+// @route PUT /auth/reset/:id
+// @desc change password
+// @access private
+router.put('/reset/:id', auth, validationRules('changePassword'), validate, changePassword);
+router.patch('/reset/:id', auth, validationRules('changePassword'), validate, changePassword);
 
 module.exports = router;

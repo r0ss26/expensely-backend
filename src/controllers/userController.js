@@ -88,7 +88,7 @@ export const userUpdate = async (req, res) => {
     if (!user) return res.status(404).json({ msg: 'User not found' })
 
     if (user._id.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "No authorization" })
+      return res.status(401).json({ msg: "Not authorized" })
     }
 
     user = await User.findByIdAndUpdate(

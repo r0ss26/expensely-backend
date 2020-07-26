@@ -14,8 +14,6 @@ router.post('/register', validationRules('userSignUp'), validate, userRegister);
 //  @route PUT/PATCH /users/userId
 //  @desc Update user profile 
 //  @access Private
-
-
 router.put('/:id', auth, upload.single('profileImage'), validationRules('userUpdate'), validate, userUpdate);
 router.patch('/:id', auth, upload.single('profileImage'), validationRules('userUpdate'), validate, userUpdate);
 

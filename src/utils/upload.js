@@ -31,7 +31,7 @@ const s3 = new aws.S3({
 // Check File Type
 //define filter for multer uploads
 const fileFilter = (req, file, cb) => {
-    console.log(file)
+    //console.log(file)
     //reject file if not jpeg or png or jpg or gif
     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
         cb(null, true);
