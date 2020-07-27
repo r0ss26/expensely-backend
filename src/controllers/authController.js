@@ -65,11 +65,13 @@ export const changePassword = async (req, res) => {
 
   try {
     const { currentPassword, password } = req.body
-    // console.log("currentPassord", currentPassword)
-    // console.log("password", password)
-    // console.log("user", user)
+    console.log("currentPassord", currentPassword)
+    console.log("password", password)
+  
     //find user by id
     let user = await User.findById(req.params.id)
+
+    console.log("user", user)
 
     //if no user return error message
     if (!user) return res.status(404).json({ msg: 'User not found' })
@@ -93,7 +95,7 @@ export const changePassword = async (req, res) => {
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
-   return res.status(200).json(user);
+    return res.status(200);
 
   } catch (error) {
     console.log(error.message);
