@@ -72,7 +72,10 @@ var TransactionSchema = new Schema({
   comment: {
     type: String
   },
-  category: [CategoriesSchema],
+  category: {
+    type: String, // The id of the category
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now
