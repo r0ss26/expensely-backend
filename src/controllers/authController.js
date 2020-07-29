@@ -52,7 +52,7 @@ export const loginUser = async (req, res) => {
       },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.status(200).json({ token });
       }
     );
   } catch (error) {
