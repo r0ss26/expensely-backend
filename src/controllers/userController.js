@@ -29,7 +29,7 @@ export const userRegister = async (req, res) => {
     })
 
     //seed user model with categories data
-    seedCategories(user)
+    await seedCategories(user)
 
     //geneate salt of length 10 and save to salt
     const salt = await bcrypt.genSalt(10);

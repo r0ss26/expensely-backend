@@ -113,9 +113,9 @@ const categoriesData = [
 ]
 
 
-export const seedCategories = (model) => {
+export const seedCategories = async (model) => {
     categoriesData.map(item => {
         model.categories.push(item)
     })
-    model.save()
+    await model.save()
 }
