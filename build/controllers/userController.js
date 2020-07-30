@@ -68,23 +68,24 @@ var userRegister = exports.userRegister = function () {
             });
 
             //seed user model with categories data
-            (0, _categoriesData.seedCategories)(user);
+            _context.next = 10;
+            return (0, _categoriesData.seedCategories)(user);
 
-            //geneate salt of length 10 and save to salt
-            _context.next = 11;
+          case 10:
+            _context.next = 12;
             return _bcryptjs2.default.genSalt(10);
 
-          case 11:
+          case 12:
             salt = _context.sent;
-            _context.next = 14;
+            _context.next = 15;
             return _bcryptjs2.default.hash(password, salt);
 
-          case 14:
+          case 15:
             user.password = _context.sent;
-            _context.next = 17;
+            _context.next = 18;
             return user.save();
 
-          case 17:
+          case 18:
 
             //create payload with user id
             payload = {
@@ -101,22 +102,22 @@ var userRegister = exports.userRegister = function () {
               if (err) throw err;
               res.json({ token: token });
             });
-            _context.next = 25;
+            _context.next = 26;
             break;
 
-          case 21:
-            _context.prev = 21;
+          case 22:
+            _context.prev = 22;
             _context.t0 = _context['catch'](0);
 
             console.log(_context.t0.message);
             res.status(500).send({ msg: 'Internal server error' });
 
-          case 25:
+          case 26:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[0, 21]]);
+    }, _callee, undefined, [[0, 22]]);
   }));
 
   return function userRegister(_x, _x2) {

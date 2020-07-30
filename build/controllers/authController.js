@@ -119,7 +119,7 @@ var loginUser = exports.loginUser = function () {
               expiresIn: '10h'
             }, function (err, token) {
               if (err) throw err;
-              res.json({ token: token });
+              res.status(200).json({ token: token });
             });
             _context2.next = 19;
             break;
