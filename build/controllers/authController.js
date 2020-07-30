@@ -154,37 +154,42 @@ var changePassword = exports.changePassword = function () {
           case 0:
             _context3.prev = 0;
             _req$body2 = req.body, currentPassword = _req$body2.currentPassword, password = _req$body2.password;
-            // console.log("currentPassord", currentPassword)
-            // console.log("password", password)
-            // console.log("user", user)
-            //find user by id
 
-            _context3.next = 4;
+            console.log("currentPassord", currentPassword);
+            console.log("password", password);
+
+            //find user by id
+            _context3.next = 6;
             return _userModel2.default.findById(req.params.id);
 
-          case 4:
+          case 6:
             user = _context3.sent;
 
+
+            console.log("user", user);
+
+            //if no user return error message
+
             if (user) {
-              _context3.next = 7;
+              _context3.next = 10;
               break;
             }
 
             return _context3.abrupt('return', res.status(404).json({ msg: 'User not found' }));
 
-          case 7:
+          case 10:
             if (!(user._id.toString() !== req.user.id)) {
-              _context3.next = 9;
+              _context3.next = 12;
               break;
             }
 
             return _context3.abrupt('return', res.status(401).json({ msg: "Not authorized" }));
 
-          case 9:
-            _context3.next = 11;
+          case 12:
+            _context3.next = 14;
             return _bcryptjs2.default.compare(currentPassword, user.password);
 
-          case 11:
+          case 14:
             isMatch = _context3.sent;
 
 
@@ -193,35 +198,35 @@ var changePassword = exports.changePassword = function () {
             }
 
             //geneate salt of length 10 and save to salt
-            _context3.next = 15;
+            _context3.next = 18;
             return _bcryptjs2.default.genSalt(10);
 
-          case 15:
+          case 18:
             salt = _context3.sent;
-            _context3.next = 18;
+            _context3.next = 21;
             return _bcryptjs2.default.hash(password, salt);
 
-          case 18:
+          case 21:
             user.password = _context3.sent;
-            _context3.next = 21;
+            _context3.next = 24;
             return user.save();
 
-          case 21:
-            return _context3.abrupt('return', res.status(200).json(user));
-
           case 24:
-            _context3.prev = 24;
+            return _context3.abrupt('return', res.status(200));
+
+          case 27:
+            _context3.prev = 27;
             _context3.t0 = _context3['catch'](0);
 
             console.log(_context3.t0.message);
             res.status(500).send({ msg: 'Internal server error' });
 
-          case 28:
+          case 31:
           case 'end':
             return _context3.stop();
         }
       }
-    }, _callee3, undefined, [[0, 24]]);
+    }, _callee3, undefined, [[0, 27]]);
   }));
 
   return function changePassword(_x5, _x6) {
