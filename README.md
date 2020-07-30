@@ -414,19 +414,19 @@ For project management we have utilised Trello for task management. Our project 
 
 ### Part B - Development
 
-![Screenshot from 2020-07-20 09-10-08](./docs/project-management-development/Screenshot from 2020-07-20 09-10-08.png)
+![Screenshot from 2020-07-20 09-10-08](./docs/project-management-development/Screenshot-from-2020-07-20-09-10-08.png)
 
-![Screenshot from 2020-07-20 10-41-29](./docs/project-management-development/Screenshot from 2020-07-20 10-41-29.png)
+![Screenshot from 2020-07-20 10-41-29](./docs/project-management-development/Screenshot-from-2020-07-20-10-41-29.png)
 
-![Screenshot from 2020-07-20 14-01-56](./docs/project-management-development/Screenshot from 2020-07-20 14-01-56.png)
+![Screenshot from 2020-07-20 14-01-56](./docs/project-management-development/Screenshot-from-2020-07-20-14-01-56.png)
 
-![Screenshot from 2020-07-21 20-10-29](./docs/project-management-development/Screenshot from 2020-07-21 20-10-29.png)
+![Screenshot from 2020-07-21 20-10-29](./docs/project-management-development/Screenshot-from-2020-07-21-20-10-29.png)
 
-![Screenshot from 2020-07-21 20-10-44](./docs/project-management-development/Screenshot from 2020-07-21 20-10-44.png)
+![Screenshot from 2020-07-21 20-10-44](./docs/project-management-development/Screenshot-from-2020-07-21-20-10-44.png)
 
-![Screenshot from 2020-07-22 09-07-12](./docs/project-management-development/Screenshot from 2020-07-22 09-07-12.png)
+![Screenshot from 2020-07-22 09-07-12](./docs/project-management-development/Screenshot-from-2020-07-22-09-07-12.png)
 
-![Screenshot from 2020-07-23 14-01-56](./docs/project-management-development/Screenshot from 2020-07-23 14-01-56.png)
+![Screenshot from 2020-07-23 14-01-56](./docs/project-management-development/Screenshot-from-2020-07-23-14-01-56.png)
 
 <h1>Presentation slidedeck - Part A</h1>
 
