@@ -65,13 +65,9 @@ export const changePassword = async (req, res) => {
 
   try {
     const { currentPassword, password } = req.body
-    console.log("currentPassord", currentPassword)
-    console.log("password", password)
-  
+
     //find user by id
     let user = await User.findById(req.params.id)
-
-    console.log("user", user)
 
     //if no user return error message
     if (!user) return res.status(404).json({ msg: 'User not found' })
@@ -86,16 +82,18 @@ export const changePassword = async (req, res) => {
 
     if (!isMatch) {
       res.status(400).json({ msg: 'invalid credentials' });
+    } else {
+      //geneate salt of length 10 and save to salt
+      const salt = await bcrypt.genSalt(10);
+
+      //hash new password with salt
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+      return res.status(200);
+
     }
-
-    //geneate salt of length 10 and save to salt
-    const salt = await bcrypt.genSalt(10);
-
-    //hash new password with salt
-    user.password = await bcrypt.hash(password, salt);
-
-    await user.save();
-    return res.status(200);
+    
 
   } catch (error) {
     console.log(error.message);
